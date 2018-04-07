@@ -19,7 +19,7 @@
 ### 功能
  - **`unless`函数接收`2`个参数**
 
- - **当`predicate`为`fals`e时，调用`fn`函数**
+ - **当`predicate`为`false`时，调用`fn`函数**
 
 ``` javascript
     const unless = (predicate, fn) => {
@@ -90,17 +90,15 @@
 
 ### 参数
  1. 调用对象的一个`key`值
-
+ 2. `1`或者`-1`
 ### 功能
- - **`sortBy`函数接受`1`个参数**
-
  - **`sortBy`函数会根据`property`来决定数组的`sort`方法根据那个`key`的值来排序**
-
+ - **当`order`值为`1`时，从小到大排序，当`order`值为`-1`时，从大到小排序**
 ``` javascript
-    const sortBy = (property) => {
+    const sortBy = (property, order) => {
         return (a, b) => {
-            var result = (a[property] < b[property] ? -1 :
-                (a[property] > b[property]) ? 1 : 0)
+            var result = (a[property] < b[property] ? -order :
+                (a[property] > b[property]) ? order : 0)
             return result
         }
     }
@@ -115,7 +113,7 @@
             age: 18
         }
     ]
-    console.log(Person.sort(sortBy('age')))
+    console.log(Person.sort(sortBy('age', 1)))
     //输出：
         // 0: {name: "huahua", age: 18}
         // 1: {name: "yvyv", age: 19}
