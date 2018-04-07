@@ -1,8 +1,12 @@
+# **FP(函数式编程)-方法库**
+
 [unless方法](#unless方法) 
 
 [times方法](#times方法) 
 
 [every方法](#every方法) 
+
+[some方法](#some方法) 
 
 # unless方法
 
@@ -15,11 +19,12 @@
 
 **当predicate为false时，调用fn方法**
 
+``` javascript
     const unless = (predicate, fn) => {
         if(!predicate)
             fn()
     }
-
+```
 
 # times方法
 
@@ -32,10 +37,12 @@
 
 **times方法会从0到times执行for循环，将每次循环的值传递给fn执行**
 
+``` javascript
     const times = (times, fn) => {
         for (var i = 0; i < times; i++)
             fn(i)
     }
+```
 
 # every方法
 
@@ -48,9 +55,31 @@
 
 **every方法会遍历数组arr，当参数各项满足fn判断时，返回true，否则返回false**
 
+``` javascript
     const every = (arr, fn) => {
         let result = true
         for (let value of arr)
             result = result && fn(arr[value])
         return result
     }
+```
+
+# some方法
+
+### 参数
+ 1. 数组
+ 2. 方法
+
+### 功能
+**every方法接受两个参数**
+
+**every方法会遍历数组arr，当参数任意一项满足fn判断时，返回true，否则返回false**
+
+``` javascript
+    const some = (arr, fn) => {
+        let result = false
+        for(let value of arr)
+            result = result || fn(value)
+        return result
+    }
+```
