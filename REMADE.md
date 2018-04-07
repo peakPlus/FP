@@ -1,23 +1,23 @@
-# **FP(函数式编程)-方法库**
+# **FP(函数式编程)-函数库**
 
-[unless方法](#unless方法) 
+[`unless`函数](#unless函数) 
 
-[times方法](#times方法) 
+[`times`函数](#times函数) 
 
-[every方法](#every方法) 
+[`every`函数](#every函数) 
 
-[some方法](#some方法) 
+[`some`函数](#some函数) 
 
-# unless方法
+# `unless`函数
 
 ### 参数
- 1. boolean值
- 2. 函数方法名
+ 1. `boolean`值
+ 2. `fn`函数
 
 ### 功能
-**unless方法接收两个参数**
+**`unless`函数接收`2`个参数**
 
-**当predicate为false时，调用fn方法**
+**当`predicate`为`fals`e时，调用`fn`函数**
 
 ``` javascript
     const unless = (predicate, fn) => {
@@ -26,16 +26,16 @@
     }
 ```
 
-# times方法
+# `times`函数
 
 ### 参数
- 1. 数字类型
- 2. 方法名
+ 1. `number`类型
+ 2. `fn`函数
 
 ### 功能
-**times方法接收两个参数**
+**`times`函数接收两个参数**
 
-**times方法会从0到times执行for循环，将每次循环的值传递给fn执行**
+**`times`函数会从0到`times`执行`for`循环，将每次循环的值传递给`fn`执行**
 
 ``` javascript
     const times = (times, fn) => {
@@ -44,16 +44,16 @@
     }
 ```
 
-# every方法
+# `every`函数
 
 ### 参数
- 1. 数组
- 2. 方法
+ 1. `arr`数组
+ 2. `fn`函数
 
 ### 功能
-**every方法接受两个参数**
+**`every`函数接受两个参数**
 
-**every方法会遍历数组arr，当参数各项满足fn判断时，返回true，否则返回false**
+**`every`函数会遍历数组`arr`，当参数各项满足`fn`判断时，返回`true`，否则返回`false`**
 
 ``` javascript
     const every = (arr, fn) => {
@@ -64,16 +64,16 @@
     }
 ```
 
-# some方法
+# `some`函数
 
 ### 参数
- 1. 数组
- 2. 方法
+ 1. `arr`数组
+ 2. `fn`函数
 
 ### 功能
-**every方法接受两个参数**
+**`every`函数接受`2`个参数**
 
-**every方法会遍历数组arr，当参数任意一项满足fn判断时，返回true，否则返回false**
+**`every`函数会遍历数组`arr`，当参数任意一项满足`fn`判断时，返回`true`，否则返回`false`**
 
 ``` javascript
     const some = (arr, fn) => {
