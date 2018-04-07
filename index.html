@@ -18,16 +18,12 @@
 <script src="./every/every.js"></script>
 <script src="./some/some.js"></script>
 <script src="./sortBy/sortBy.js"></script>
+<script src="./tap/tap.js"></script>
 <script>
-    var Person = [
-        {
-            name: 'yvyv',
-            age: 19
-        },
-        {
-            name: 'huahua',
-            age: 18
-        }
-    ]
-    console.log(Person.sort(sortBy('age', 1)))
+    const arr = [1, 8, 3, 7, 2, 8, 2, 9]
+    arr.forEach((i) => {
+        tap(i)((i) => {
+            console.log(i)
+        })
+    })
 </script>

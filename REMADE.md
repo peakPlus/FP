@@ -10,6 +10,8 @@
 
  - [`sortBy`函数](#sortBy函数) 
 
+ - [`tap`函数](#tap函数) 
+
 # `unless`函数
 
 ### 参数
@@ -117,5 +119,28 @@
     //输出：
         // 0: {name: "huahua", age: 18}
         // 1: {name: "yvyv", age: 19}
-    
+```
+
+# `tap`函数
+
+### 参数
+ 1. value
+### 功能
+ - **`tap`函数接受`value`参数并返回一个函数**
+ - **该函数执行时，接受一个`fn`函数参数，将`value`传递给`fn`函数并执行，同时打印出去`value`**
+### 使用场景
+ - **当遍历一个数组对象，需要调试时，使用`tap`函数打印出所有的`value`并执行对应方法**
+``` javascript
+    const tap = (value) =>
+    (fn) => (
+        typeof fn === 'function' && fn(value),
+        console.log(value)
+    )
+    // 用法：
+    const arr = [1, 8, 3, 7, 2, 8, 2, 9]
+    arr.forEach((i) => {
+        tap(i)((i) => {
+            // 函数具体
+        })
+    })
 ```
