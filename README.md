@@ -16,6 +16,7 @@
 
  - [`once`函数](#once函数) 
 
+ - [`memoized`函数](#memoized函数) 
 # `unless`函数
 
 ### 参数
@@ -192,4 +193,23 @@
     const fn = once((a, b, c) => a + b + c)
     console.log(fn(1, 2, 3))//输出：6
     console.log(fn(1, 2, 3))//输出：undefined
+```
+
+# `memoized`函数
+
+### 参数
+ 1. `fn`函数
+### 功能
+ - **`memoized`函数接受`fn`函数并返回`fn`函数**
+ - **当`fn`函数接受的参数相同时，`memoized`内部的`lookupTable`对象会缓存`fn`执行结果，再次调用时，直接返回缓存，不执行`fn`函数**
+### 使用场景
+ - **当只需要运行`1`次给定的函数时**
+``` javascript
+    const memoized = (fn) => {
+        let lookupTable = {}
+        return (...rest) => lookupTable[rest] || (lookupTable[rest] = fn.apply(this, rest))
+    }
+    const fn = memoized((a, b) => a + b)
+    console.log(fn(2, 5))// 输出：7
+    console.log(fn(2, 5))// 输出：7
 ```

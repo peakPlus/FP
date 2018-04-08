@@ -20,17 +20,10 @@
 <script src="./src/sortBy.js"></script>
 <script src="./src/tap.js"></script>
 <script src="./src/unary.js"></script>
-<!-- <script src="./src/once.js"></script> -->
+<script src="./src/once.js"></script>
+<script src="./src/memoized.js"></script>
 <script>
-    const once = (fn) => {
-        let done = false
-        return (...rest) => {
-            return done ?
-                undefined :
-                ((done = true), fn.apply(this, rest))
-        }
-    }
-    const fn = once((a, b, c) => a + b + c)
-    console.log(fn(1, 2, 3))
-    console.log(fn(1, 2, 3))
+    let fn = memoized((a, b) => a + b)
+    console.log(fn(2, 5))
+    console.log(fn(2, 5))
 </script>
