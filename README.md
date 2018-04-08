@@ -12,6 +12,10 @@
 
  - [`tap`函数](#tap函数) 
 
+ - [`unary`函数](#unary函数) 
+
+ - [`once`函数](#once函数) 
+
 # `unless`函数
 
 ### 参数
@@ -143,4 +147,49 @@
             // 函数具体
         })
     })
+```
+
+# `unary`函数
+
+### 参数
+ 1. `fn`函数
+### 功能
+ - **`unary`函数接受`fn`函数并返回只接受`1`个参数的`fn`函数**
+### 使用场景
+ - **`Array.prototype.map`函数会给回调`callback`函数传递`3`个参数**
+ 1. `currentValue`：数组中正在处理的当前元素。
+ 2. `index`: 数组中正在处理的当前元素的索引。
+ 3. `array`: `map` 方法被调用的数组。
+``` javascript
+    const unary = (fn) => 
+        fn.length === 1 ?
+            fn :
+            (arg) => fn(arg)
+
+    console.log(['1', '2', '3'].map(parseInt))
+    // 输出：[1, NAN, NAN]
+    console.log(['1', '2', '3'].map(unary(parseInt)))
+    // 输出：[1, 2, 3]
+```
+
+# `once`函数
+
+### 参数
+ 1. `fn`函数
+### 功能
+ - **`once`函数接受`fn`函数并返回只能调用`1`次的`fn`函数，二次调用会返回`undefined`**
+### 使用场景
+ - **当只需要运行`1`次给定的函数时**
+``` javascript
+    const once = (fn) => {
+        let done = false
+        return (...rest) => {
+            return done ?
+                undefined :
+                ((done = true), fn.apply(this, rest))
+        }
+    }
+    const fn = once((a, b, c) => a + b + c)
+    console.log(fn(1, 2, 3))//输出：6
+    console.log(fn(1, 2, 3))//输出：undefined
 ```

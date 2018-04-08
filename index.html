@@ -19,11 +19,18 @@
 <script src="./src/some.js"></script>
 <script src="./src/sortBy.js"></script>
 <script src="./src/tap.js"></script>
+<script src="./src/unary.js"></script>
+<!-- <script src="./src/once.js"></script> -->
 <script>
-    const arr = [1, 8, 3, 7, 2, 8, 2, 9]
-    arr.forEach((i) => {
-        tap(i)((i) => {
-            console.log(i)
-        })
-    })
+    const once = (fn) => {
+        let done = false
+        return (...rest) => {
+            return done ?
+                undefined :
+                ((done = true), fn.apply(this, rest))
+        }
+    }
+    const fn = once((a, b, c) => a + b + c)
+    console.log(fn(1, 2, 3))
+    console.log(fn(1, 2, 3))
 </script>
