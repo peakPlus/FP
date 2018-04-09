@@ -1,5 +1,5 @@
 # **FP(函数式编程)-函数库**
-
+**[`1.` 普通函数](#1.普通函数)**
  - [`unless`函数](#unless函数) 
 
  - [`times`函数](#times函数) 
@@ -17,7 +17,18 @@
  - [`once`函数](#once函数) 
 
  - [`memoized`函数](#memoized函数) 
-# `unless`函数
+
+**[`2.` 数组函数](#2.数组函数)**
+ 
+ - [`forEach`函数](#forEach函数) 
+
+ - [`map`函数](#map) 
+
+ - [`filter`函数](#filter函数) 
+---
+# **1. 普通函数**
+
+## `unless`函数
 
 ### 参数
  1. `boolean`值
@@ -34,8 +45,8 @@
             fn()
     }
 ```
-
-# `times`函数
+---
+## `times`函数
 
 ### 参数
  1. `number`类型
@@ -52,8 +63,8 @@
             fn(i)
     }
 ```
-
-# `every`函数
+---
+## `every`函数
 
 ### 参数
  1. `arr`数组
@@ -72,8 +83,8 @@
         return result
     }
 ```
-
-# `some`函数
+---
+## `some`函数
 
 ### 参数
  1. `arr`数组
@@ -92,8 +103,8 @@
         return result
     }
 ```
-
-# `sortBy`函数
+---
+## `sortBy`函数
 
 ### 参数
  1. 调用对象的一个`key`值
@@ -125,8 +136,8 @@
         // 0: {name: "huahua", age: 18}
         // 1: {name: "yvyv", age: 19}
 ```
-
-# `tap`函数
+---
+## `tap`函数
 
 ### 参数
  1. value
@@ -149,8 +160,8 @@
         })
     })
 ```
-
-# `unary`函数
+---
+## `unary`函数
 
 ### 参数
  1. `fn`函数
@@ -172,8 +183,8 @@
     console.log(['1', '2', '3'].map(unary(parseInt)))
     // 输出：[1, 2, 3]
 ```
-
-# `once`函数
+---
+## `once`函数
 
 ### 参数
  1. `fn`函数
@@ -194,8 +205,8 @@
     console.log(fn(1, 2, 3))//输出：6
     console.log(fn(1, 2, 3))//输出：undefined
 ```
-
-# `memoized`函数
+---
+## `memoized`函数
 
 ### 参数
  1. `fn`函数
@@ -213,3 +224,80 @@
     console.log(fn(2, 5))// 输出：7
     console.log(fn(2, 5))// 输出：7
 ```
+---
+# **2. 数组函数**
+
+## `forEach`函数
+
+### 参数
+ 1. `arr`数组
+ 2. `fn`函数
+### 功能
+ - **`forEach`函数接受`arr`数组将`arr`数组的每`1`个`value`都传递给`fn`函数并调用**
+### 使用场景
+ - **仅需迭代数组时使用**
+``` javascript
+    const forEach = (arr, fn) => {
+        for (let value of arr)
+            fn(value)
+    }
+    let json = [
+        {
+            "address": "中国",
+            "id": 1,
+            "name": "Taki"
+        },
+        {
+            "address": "Japan",
+            "id": 2,
+            "name": "DSM"
+        }]
+    forEach(json, (value) => console.log({
+        address: value.address,
+        name: value.name
+    }))
+    // 输出：{address: "中国", name: "Taki"}
+    // 输出：{address: "Japan", name: "DSM"}
+```
+---
+## `map`函数
+
+### 参数
+ 1. `arr`数组
+ 2. `fn`函数
+### 功能
+ - **`map`函数接受`arr`数组将`arr`数组的每`1`个`value`都传递给`fn`函数并调用**
+ - **`fn`的函数返回值将会依次保存进`1`个新数组，新数组由`map`函数返回**
+### 使用场景
+ - **仅需迭代数组时使用**
+``` javascript
+    const map = (arr, fn) => {
+        let results = []
+        for (let value of arr)
+            results.push(fn(value))
+        return results
+    }
+    let json = [
+        {
+            "address": "中国",
+            "id": 1,
+            "name": "Taki"
+        },
+        {
+            "address": "Japan",
+            "id": 2,
+            "name": "DSM"
+        }]
+    console.log(map(json, (value) => {
+        return {
+            address: value.address,
+            name: value.name
+        }
+    }))
+    // 输出：[{
+    //         address: "中国", name: "Taki"
+    //     }, {
+    //         address: "Japan", name: "DSM"
+    //     }]
+```
+---

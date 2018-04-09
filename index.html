@@ -22,5 +22,28 @@
 <script src="./src/unary.js"></script>
 <script src="./src/once.js"></script>
 <script src="./src/memoized.js"></script>
+<script src="./src/ArrayFun/forEach.js"></script>
+<script src="./src/ArrayFun/map.js"></script>
 <script>
+    let json = [
+        {
+            "address": "中国",
+            "id": 1,
+            "name": "Taki"
+        },
+        {
+            "address": "Japan",
+            "id": 2,
+            "name": "DSM"
+        }]
+    forEach(json, (value) => console.log({
+        address: value.address,
+        name: value.name
+    }))
+    console.log(map(json, (value) => {
+        return {
+            address: value.address,
+            name: value.name
+        }
+    }))
 </script>
