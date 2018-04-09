@@ -20,9 +20,9 @@
 
 **[`2.` 数组函数](#2.数组函数)**
  
- - [`forEach`函数](#forEach函数) 
+ - [`forEach`函数](#foraach函数) 
 
- - [`map`函数](#map) 
+ - [`map`函数](#map函数) 
 
  - [`filter`函数](#filter函数) 
 ---
