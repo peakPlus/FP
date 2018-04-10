@@ -386,8 +386,10 @@
                 accumlator = fn(accumlator, value)
         return [accumlator]
     }
-    let arr = [1, 2, 3, 4, 5, 6, 342]
-    console.log(reduce(arr, (acc, val) => acc + val, 0))
-    // 输出：[{address: "中国", id: 1, name: "Taki"}]
+    let arr = [1, 2, 3, 4]
+    console.log(reduce(arr, (acc, val) => acc + val))
+    // 输出：[10]
+    console.log(reduce(arr, (acc, val) => acc * val, 1))
+    // 输出：[24]
 ```
 ---
