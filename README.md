@@ -218,7 +218,7 @@
  - **`memoized`函数接受`fn`函数并返回`fn`函数**
  - **当`fn`函数接受的参数相同时，`memoized`内部的`lookupTable`对象会缓存`fn`执行结果，再次调用时，直接返回缓存，不执行`fn`函数**
 ### 使用场景
- - **当只需要运行`1`次给定的函数时**
+ - **当函数计算过程过于复杂，需要缓存结果时**
 ``` javascript
     const memoized = (fn) => {
         let lookupTable = {}
