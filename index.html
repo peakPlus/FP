@@ -24,16 +24,14 @@
 <script src="./src/memoized.js"></script>
 <script src="./src/ArrayFun/forEach.js"></script>
 <script src="./src/ArrayFun/map.js"></script>
+<script src="./src/ArrayFun/filter.js"></script>
+<script src="./src/ArrayFun/concatAll.js"></script>
+<script src="./src/ArrayFun/reduce.js"></script>
 <script>
     let json = [
-        {
-            "address": "中国",
-            "id": 1,
-            "name": "Taki"
-        },
-        {
-            "address": "Japan",
-            "id": 2,
-            "name": "DSM"
-        }]
+        [1, 2, 3, 4],
+        [2, 3, 4, 5]
+    ]
+    console.log(concatAll(json))
+    // 输出：[{address: "中国", id: 1, name: "Taki"}]
 </script>

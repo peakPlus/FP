@@ -25,6 +25,10 @@
  - [`map`函数](#map函数) 
 
  - [`filter`函数](#filter函数) 
+
+ - [`concatAll`函数](#concatAll函数) 
+
+ - [`reduce`函数](#reduce函数) 
 ---
 # **1. 普通函数**
 
@@ -299,5 +303,91 @@
     //     }, {
     //         address: "Japan", name: "DSM"
     //     }]
+```
+---
+## `filter`函数
+
+### 参数
+ 1. `arr`数组
+ 2. `fn`函数
+### 功能
+ - **`filter`函数接受`arr`数组将`arr`数组的每`1`个`value`都传递给`fn`函数并调用**
+ - **满足`fn`函数的`value`将会依次保存进`1`个新数组，新数组由`filter`函数返回**
+### 使用场景
+ - **迭代数组并有限制时 生成新数组**
+``` javascript
+    const filter = (arr, fn) => {
+        let results = []
+        for(const value of arr)
+            (fn(value) ? results.push(value) : undefined)
+        return results
+    }
+    let json = [
+        {
+            "address": "中国",
+            "id": 1,
+            "name": "Taki"
+        },
+        {
+            "address": "Japan",
+            "id": 2,
+            "name": "DSM"
+        }]
+    console.log(filter(json, (value) => value.id == 1))
+    // 输出：[{address: "中国", id: 1, name: "Taki"}]
+```
+---
+## `concatAll`函数
+
+### 参数
+ 1. `arr`嵌套数组
+### 功能
+ - **`concatAll`函数接受`arr`数组参数将`arr`数组的每`1`个子数组里的值都依次加入新数组并返回**
+### 使用场景
+ - **嵌套数组转换普通数组**
+``` javascript
+    const concatAll = (arr) => {
+        let results = []
+        for(let value of arr)
+            results.push.apply(results, value)
+        return results
+    }
+    let json = [
+        [1, 2, 3, 4],
+        [2, 3, 4, 5]
+    ]
+    console.log(concatAll(json))
+    // 输出：[1, 2, 3, 4, 2, 3, 4, 5]
+```
+---
+## `reduce`函数
+
+### 参数
+ 1. `arr`数组
+ 2. `fn`函数
+ 3. `initialValue`数字（可选填）
+### 功能
+ - **`reduce`函数将迭代`arr`数组的各项并依次传递给`fn`函数，进行归约操作**
+ - **`initialValue`参数可选，当未传值时，从数组第`2`个元素进行遍历，如若传值，由`initialValue`作为累加器的初始值，且遍历整个数组**
+### 使用场景
+ - **将数组各项进行`+`、`*`等归约操作**
+``` javascript
+    const reduce = (arr, fn, initialValue) => {
+        let accumlator
+        if (initialValue != undefined)
+            accumlator = initialValue
+        else
+            accumlator = arr[0]
+        if (initialValue === undefined)
+            for (let i = 1, len = arr.length; i < len; i++)
+                accumlator = fn(accumlator, arr[i])
+        else
+            for (let value of arr)
+                accumlator = fn(accumlator, value)
+        return [accumlator]
+    }
+    let arr = [1, 2, 3, 4, 5, 6, 342]
+    console.log(reduce(arr, (acc, val) => acc + val, 0))
+    // 输出：[{address: "中国", id: 1, name: "Taki"}]
 ```
 ---
