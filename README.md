@@ -29,6 +29,8 @@
  - [`concatAll`函数](#concatAll函数) 
 
  - [`reduce`函数](#reduce函数) 
+
+ - [`zip`函数](#zip函数) 
 ---
 # **1. 普通函数**
 
@@ -391,5 +393,30 @@
     // 输出：[10]
     console.log(reduce(arr, (acc, val) => acc * val, 1))
     // 输出：[24]
+```
+---
+## `zip`函数
+
+### 参数
+ 1. `leftArr`数组
+ 2. `rightArr`数组
+ 3. `fn`函数
+### 功能
+ - **`zip`函数将`leftArr`数组和`rightArr`数组相同键的项传递给`fn`函数，返回新数组**
+### 使用场景
+ - **将两个数组相同键的项进行合并操作**
+``` javascript
+    const zip = (leftArr, rightArr, fn) => {
+        let index, results = []
+        for (index = 0; index < Math.min(leftArr.length, rightArr.length); index++)
+            results.push(fn(leftArr[index], rightArr[index]))
+        return results
+    }
+    console.log(zip(
+        [1, 2, 3, 4],
+        [2, 3, 7, 7, 8],
+        (x, y) => x + y)
+    )
+    // 输出：[3, 5, 10, 11]
 ```
 ---
