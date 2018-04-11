@@ -19,7 +19,7 @@
  - [`memoized`函数](#memoized函数) 
 
 **[`2.` 数组函数](#2-数组函数)**
- 
+
  - [`forEach`函数](#foreach函数) 
 
  - [`map`函数](#map函数) 
@@ -31,6 +31,10 @@
  - [`reduce`函数](#reduce函数) 
 
  - [`zip`函数](#zip函数) 
+
+**[`3.` 柯里化函数](#3-柯里化函数)**
+
+ - [`curry`函数](#curry函数) 
 ---
 # **1. 普通函数**
 
@@ -418,5 +422,25 @@
         (x, y) => x + y)
     )
     // 输出：[3, 5, 10, 11]
+```
+---
+# **3. 柯里化函数**
+
+## `curry`函数
+
+### 参数
+ 1. `fn`函数
+### 功能
+ - **`curry`函数将`fn`两元函数转化为一元函数**
+### 使用场景
+ - **两元函数转化为一元函数**
+``` javascript
+    const curry = (fn) => 
+        (firstArg) => 
+            (secondArg) => 
+                fn(firstArg, secondArg)
+    let fn = curry((a, b) => a + b)
+    console.log(fn(1)(2))
+    // 输出：3
 ```
 ---
