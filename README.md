@@ -479,8 +479,8 @@
                 if (args[i] === undefined) {
                     args[i] = fullArgs[arg++]
                 }
-                return fn.apply(null, args)
             }
+            return fn.apply(null, args)
         }
     }
     let fn = partial(setTimeout, undefined, 3000)

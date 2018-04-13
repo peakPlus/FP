@@ -4,7 +4,7 @@ const partial = (fn, ...args) => {
             if (args[i] === undefined) {
                 args[i] = fullArgs[arg++]
             }
-            return fn.apply(null, args)
         }
+        return fn.apply(null, args)
     }
 }
