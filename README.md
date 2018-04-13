@@ -35,6 +35,10 @@
 **[`3.` 柯里化函数](#3-柯里化函数)**
 
  - [`curry`函数](#curry函数) 
+
+**[`4.` 偏应用函数](#4-偏应用函数)**
+
+ - [`partial`函数](#partial函数) 
 ---
 # **1. 普通函数**
 
@@ -454,5 +458,33 @@
     console.log(fn(1)(2)(3))
     console.log(fn(1, 2)(3))
     // 输出：6
+```
+---
+# **4. 偏应用函数**
+
+## `partial`函数
+
+### 参数
+ 1. `fn`函数
+ 2. 若干参数
+### 功能
+ - **`fn`函数参数中有未知参数等待下次传递**
+ - **返回接受fn函数的未知参数的新函数**
+### 使用场景
+ - **当函数的若干个参数中，有未知参数等待下次调用传递时**
+``` javascript
+    const partial = (fn, ...args) => {
+        return (...fullArgs) => {
+            for (let i = 0, arg = 0; i < args.length && arg < fullArgs.length; i++) {
+                if (args[i] === undefined) {
+                    args[i] = fullArgs[arg++]
+                }
+                return fn.apply(null, args)
+            }
+        }
+    }
+    let fn = partial(setTimeout, undefined, 3000)
+    fn(() => console.log(123))
+    // 3秒后输出：123
 ```
 ---

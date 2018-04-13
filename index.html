@@ -29,6 +29,8 @@
 <script src="./src/ArrayFun/reduce.js"></script>
 <script src="./src/ArrayFun/zip.js"></script>
 <script src="./src/CurryFun/curry.js"></script>
+<script src="./src/partialFun/partial.js"></script>
 <script>
-    console.log(curry((x, y, z) => x + y + z)(1, 2)(3))
+    let fn = partial(setTimeout, undefined, 3000)
+    fn(() => console.log(123))
 </script>
