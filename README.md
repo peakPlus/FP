@@ -431,16 +431,28 @@
 ### 参数
  1. `fn`函数
 ### 功能
- - **`curry`函数将`fn`两元函数转化为一元函数**
+ - **`curry`函数将`fn`多元函数转化为可接受多次传参函数**
+ - **当参数传够之后，将所有参数传递给执行fn函数，并执行**
 ### 使用场景
- - **两元函数转化为一元函数**
+ - **多元函数转化为多次传递参数函数**
 ``` javascript
-    const curry = (fn) => 
-        (firstArg) => 
-            (secondArg) => 
-                fn(firstArg, secondArg)
-    let fn = curry((a, b) => a + b)
-    console.log(fn(1)(2))
-    // 输出：3
+    const curry = (fn) => {
+        if (typeof fn !== 'function') {
+            throw Error('Not a function')
+        }
+        const currideFn = (...args) => {
+            if (args.length < fn.length) {
+                return (...surplusArgs) => {
+                    return currideFn.apply(null, args.concat(surplusArgs))
+                }
+            }
+            return fn.apply(null, args)
+        }
+        return currideFn
+    }
+    const fn = curry((x, y, z) => x + y + z)
+    console.log(fn(1)(2)(3))
+    console.log(fn(1, 2)(3))
+    // 输出：6
 ```
 ---
