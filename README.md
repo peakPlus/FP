@@ -40,9 +40,11 @@
 
  - [`partial`函数](#partial函数) 
 
-**[`5.` 组合函数](#5-组合函数)**
+**[`5.` 组合与管道函数](#5-组合与管道函数)**
 
  - [`compose`函数](#compose函数) 
+
+ - [`pipe`函数](#pipe函数) 
 ---
 # **1. 普通函数**
 
@@ -492,7 +494,7 @@ fn(() => console.log(123))
 // 3秒后输出：123
 ```
 ---
-# **5. 组合函数**
+# **5. 组合与管道函数**
 
 ## `compose`函数
 
@@ -523,6 +525,39 @@ const compose = (...fns) =>
 var add = (x) => ++x
 var string = (x) => '' + x
 var fn = compose(string, add)
+fn(3) // ["4"]
+```
+---
+## `pice`函数
+
+### 参数
+ 1. n个`fn`函数
+### 功能
+ - **返回一个将多个`fn`函数组合起来，将前一个`fn`函数的返回值作为参数传递给后一个`fn`函数参数的函数，调用时开始执行**
+### 使用场景
+ - **当一个逻辑可以分成`多个小函数`，并且需要`互相传递参数`时，使用**
+  - **和`compose`函数的唯一区别是函数`执行顺序`相反**
+``` javascript
+const reduce = (arr, fn, initialValue) => {
+    let accumlator
+    if (initialValue != undefined)
+        accumlator = initialValue
+    else
+        accumlator = arr[0]
+    if (initialValue === undefined)
+        for (let i = 1, len = arr.length; i < len; i++)
+            accumlator = fn(accumlator, arr[i])
+    else
+        for (let value of arr)
+            accumlator = fn(accumlator, value)
+    return [accumlator]
+}
+const pice = (...fns) =>
+    (value) =>
+        reduce(fns, (acc, fn) => fn(acc), value)
+var add = (x) => ++x
+var string = (x) => '' + x
+var fn = pice(string, add)
 fn(3) // ["4"]
 ```
 ---
