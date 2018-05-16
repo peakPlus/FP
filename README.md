@@ -39,6 +39,10 @@
 **[`4.` 偏应用函数](#4-偏应用函数)**
 
  - [`partial`函数](#partial函数) 
+
+**[`5.` 组合函数](#5-组合函数)**
+
+ - [`compose`函数](#compose函数) 
 ---
 # **1. 普通函数**
 
@@ -54,10 +58,10 @@
  - **当`predicate`为`false`时，调用`fn`函数**
 
 ``` javascript
-    const unless = (predicate, fn) => {
-        if(!predicate)
-            fn()
-    }
+const unless = (predicate, fn) => {
+    if(!predicate)
+        fn()
+}
 ```
 ---
 ## `times`函数
@@ -72,10 +76,10 @@
  - **`times`函数会从0到`times`执行`for`循环，将每次循环的值传递给`fn`执行**
 
 ``` javascript
-    const times = (times, fn) => {
-        for (var i = 0; i < times; i++)
-            fn(i)
-    }
+const times = (times, fn) => {
+    for (var i = 0; i < times; i++)
+        fn(i)
+}
 ```
 ---
 ## `every`函数
@@ -90,12 +94,12 @@
  - **`every`函数会遍历数组`arr`，当参数各项满足`fn`判断时，返回`true`，否则返回`false`**
 
 ``` javascript
-    const every = (arr, fn) => {
-        let result = true
-        for (let value of arr)
-            result = result && fn(arr[value])
-        return result
-    }
+const every = (arr, fn) => {
+    let result = true
+    for (let value of arr)
+        result = result && fn(arr[value])
+    return result
+}
 ```
 ---
 ## `some`函数
@@ -110,12 +114,12 @@
  - **`every`函数会遍历数组`arr`，当参数任意一项满足`fn`判断时，返回`true`，否则返回`false`**
 
 ``` javascript
-    const some = (arr, fn) => {
-        let result = false
-        for(let value of arr)
-            result = result || fn(value)
-        return result
-    }
+const some = (arr, fn) => {
+    let result = false
+    for(let value of arr)
+        result = result || fn(value)
+    return result
+}
 ```
 ---
 ## `sortBy`函数
@@ -127,28 +131,28 @@
  - **`sortBy`函数会根据`property`来决定数组的`sort`方法根据那个`key`的值来排序**
  - **当`order`值为`1`时，从小到大排序，当`order`值为`-1`时，从大到小排序**
 ``` javascript
-    const sortBy = (property, order) => {
-        return (a, b) => {
-            var result = (a[property] < b[property] ? -order :
-                (a[property] > b[property]) ? order : 0)
-            return result
-        }
+const sortBy = (property, order) => {
+    return (a, b) => {
+        var result = (a[property] < b[property] ? -order :
+            (a[property] > b[property]) ? order : 0)
+        return result
     }
-    // 用法：
-    const Person = [
-        {
-            name: 'yvyv',
-            age: 19
-        },
-        {
-            name: 'huahua',
-            age: 18
-        }
-    ]
-    console.log(Person.sort(sortBy('age', 1)))
-    //输出：
-        // 0: {name: "huahua", age: 18}
-        // 1: {name: "yvyv", age: 19}
+}
+// 用法：
+const Person = [
+    {
+        name: 'yvyv',
+        age: 19
+    },
+    {
+        name: 'huahua',
+        age: 18
+    }
+]
+console.log(Person.sort(sortBy('age', 1)))
+//输出：
+    // 0: {name: "huahua", age: 18}
+    // 1: {name: "yvyv", age: 19}
 ```
 ---
 ## `tap`函数
@@ -161,18 +165,18 @@
 ### 使用场景
  - **当遍历一个数组对象，需要调试时，使用`tap`函数打印出所有的`value`并执行对应方法**
 ``` javascript
-    const tap = (value) =>
-    (fn) => (
-        typeof fn === 'function' && fn(value),
-        console.log(value)
-    )
-    // 用法：
-    const arr = [1, 8, 3, 7, 2, 8, 2, 9]
-    arr.forEach((i) => {
-        tap(i)((i) => {
-            // 函数具体
-        })
+const tap = (value) =>
+(fn) => (
+    typeof fn === 'function' && fn(value),
+    console.log(value)
+)
+// 用法：
+const arr = [1, 8, 3, 7, 2, 8, 2, 9]
+arr.forEach((i) => {
+    tap(i)((i) => {
+        // 函数具体
     })
+})
 ```
 ---
 ## `unary`函数
@@ -187,15 +191,15 @@
  2. `index`: 数组中正在处理的当前元素的索引。
  3. `array`: `map` 方法被调用的数组。
 ``` javascript
-    const unary = (fn) => 
-        fn.length === 1 ?
-            fn :
-            (arg) => fn(arg)
+const unary = (fn) => 
+    fn.length === 1 ?
+        fn :
+        (arg) => fn(arg)
 
-    console.log(['1', '2', '3'].map(parseInt))
-    // 输出：[1, NAN, NAN]
-    console.log(['1', '2', '3'].map(unary(parseInt)))
-    // 输出：[1, 2, 3]
+console.log(['1', '2', '3'].map(parseInt))
+// 输出：[1, NAN, NAN]
+console.log(['1', '2', '3'].map(unary(parseInt)))
+// 输出：[1, 2, 3]
 ```
 ---
 ## `once`函数
@@ -207,17 +211,17 @@
 ### 使用场景
  - **当只需要运行`1`次给定的函数时**
 ``` javascript
-    const once = (fn) => {
-        let done = false
-        return (...rest) => {
-            return done ?
-                undefined :
-                ((done = true), fn.apply(this, rest))
-        }
+const once = (fn) => {
+    let done = false
+    return (...rest) => {
+        return done ?
+            undefined :
+            ((done = true), fn.apply(this, rest))
     }
-    const fn = once((a, b, c) => a + b + c)
-    console.log(fn(1, 2, 3))//输出：6
-    console.log(fn(1, 2, 3))//输出：undefined
+}
+const fn = once((a, b, c) => a + b + c)
+console.log(fn(1, 2, 3))//输出：6
+console.log(fn(1, 2, 3))//输出：undefined
 ```
 ---
 ## `memoized`函数
@@ -230,13 +234,13 @@
 ### 使用场景
  - **当函数计算过程过于复杂，需要缓存结果时**
 ``` javascript
-    const memoized = (fn) => {
-        let lookupTable = {}
-        return (...rest) => lookupTable[rest] || (lookupTable[rest] = fn.apply(this, rest))
-    }
-    const fn = memoized((a, b) => a + b)
-    console.log(fn(2, 5))// 输出：7
-    console.log(fn(2, 5))// 输出：7
+const memoized = (fn) => {
+    let lookupTable = {}
+    return (...rest) => lookupTable[rest] || (lookupTable[rest] = fn.apply(this, rest))
+}
+const fn = memoized((a, b) => a + b)
+console.log(fn(2, 5))// 输出：7
+console.log(fn(2, 5))// 输出：7
 ```
 ---
 # **2. 数组函数**
@@ -251,27 +255,27 @@
 ### 使用场景
  - **仅需迭代数组时使用**
 ``` javascript
-    const forEach = (arr, fn) => {
-        for (let value of arr)
-            fn(value)
-    }
-    let json = [
-        {
-            "address": "中国",
-            "id": 1,
-            "name": "Taki"
-        },
-        {
-            "address": "Japan",
-            "id": 2,
-            "name": "DSM"
-        }]
-    forEach(json, (value) => console.log({
-        address: value.address,
-        name: value.name
-    }))
-    // 输出：{address: "中国", name: "Taki"}
-    // 输出：{address: "Japan", name: "DSM"}
+const forEach = (arr, fn) => {
+    for (let value of arr)
+        fn(value)
+}
+let json = [
+    {
+        "address": "中国",
+        "id": 1,
+        "name": "Taki"
+    },
+    {
+        "address": "Japan",
+        "id": 2,
+        "name": "DSM"
+    }]
+forEach(json, (value) => console.log({
+    address: value.address,
+    name: value.name
+}))
+// 输出：{address: "中国", name: "Taki"}
+// 输出：{address: "Japan", name: "DSM"}
 ```
 ---
 ## `map`函数
@@ -285,34 +289,34 @@
 ### 使用场景
  - **迭代数组生成新数组**
 ``` javascript
-    const map = (arr, fn) => {
-        let results = []
-        for (let value of arr)
-            results.push(fn(value))
-        return results
+const map = (arr, fn) => {
+    let results = []
+    for (let value of arr)
+        results.push(fn(value))
+    return results
+}
+let json = [
+    {
+        "address": "中国",
+        "id": 1,
+        "name": "Taki"
+    },
+    {
+        "address": "Japan",
+        "id": 2,
+        "name": "DSM"
+    }]
+console.log(map(json, (value) => {
+    return {
+        address: value.address,
+        name: value.name
     }
-    let json = [
-        {
-            "address": "中国",
-            "id": 1,
-            "name": "Taki"
-        },
-        {
-            "address": "Japan",
-            "id": 2,
-            "name": "DSM"
-        }]
-    console.log(map(json, (value) => {
-        return {
-            address: value.address,
-            name: value.name
-        }
-    }))
-    // 输出：[{
-    //         address: "中国", name: "Taki"
-    //     }, {
-    //         address: "Japan", name: "DSM"
-    //     }]
+}))
+// 输出：[{
+//         address: "中国", name: "Taki"
+//     }, {
+//         address: "Japan", name: "DSM"
+//     }]
 ```
 ---
 ## `filter`函数
@@ -326,25 +330,25 @@
 ### 使用场景
  - **迭代数组并有限制时 生成新数组**
 ``` javascript
-    const filter = (arr, fn) => {
-        let results = []
-        for(const value of arr)
-            (fn(value) ? results.push(value) : undefined)
-        return results
-    }
-    let json = [
-        {
-            "address": "中国",
-            "id": 1,
-            "name": "Taki"
-        },
-        {
-            "address": "Japan",
-            "id": 2,
-            "name": "DSM"
-        }]
-    console.log(filter(json, (value) => value.id == 1))
-    // 输出：[{address: "中国", id: 1, name: "Taki"}]
+const filter = (arr, fn) => {
+    let results = []
+    for(const value of arr)
+        (fn(value) ? results.push(value) : undefined)
+    return results
+}
+let json = [
+    {
+        "address": "中国",
+        "id": 1,
+        "name": "Taki"
+    },
+    {
+        "address": "Japan",
+        "id": 2,
+        "name": "DSM"
+    }]
+console.log(filter(json, (value) => value.id == 1))
+// 输出：[{address: "中国", id: 1, name: "Taki"}]
 ```
 ---
 ## `concatAll`函数
@@ -356,18 +360,18 @@
 ### 使用场景
  - **嵌套数组转换普通数组**
 ``` javascript
-    const concatAll = (arr) => {
-        let results = []
-        for(let value of arr)
-            results.push.apply(results, value)
-        return results
-    }
-    let json = [
-        [1, 2, 3, 4],
-        [2, 3, 4, 5]
-    ]
-    console.log(concatAll(json))
-    // 输出：[1, 2, 3, 4, 2, 3, 4, 5]
+const concatAll = (arr) => {
+    let results = []
+    for(let value of arr)
+        results.push.apply(results, value)
+    return results
+}
+let json = [
+    [1, 2, 3, 4],
+    [2, 3, 4, 5]
+]
+console.log(concatAll(json))
+// 输出：[1, 2, 3, 4, 2, 3, 4, 5]
 ```
 ---
 ## `reduce`函数
@@ -382,25 +386,25 @@
 ### 使用场景
  - **将数组各项进行`+`、`*`等归约操作**
 ``` javascript
-    const reduce = (arr, fn, initialValue) => {
-        let accumlator
-        if (initialValue != undefined)
-            accumlator = initialValue
-        else
-            accumlator = arr[0]
-        if (initialValue === undefined)
-            for (let i = 1, len = arr.length; i < len; i++)
-                accumlator = fn(accumlator, arr[i])
-        else
-            for (let value of arr)
-                accumlator = fn(accumlator, value)
-        return [accumlator]
-    }
-    let arr = [1, 2, 3, 4]
-    console.log(reduce(arr, (acc, val) => acc + val))
-    // 输出：[10]
-    console.log(reduce(arr, (acc, val) => acc * val, 1))
-    // 输出：[24]
+const reduce = (arr, fn, initialValue) => {
+    let accumlator
+    if (initialValue != undefined)
+        accumlator = initialValue
+    else
+        accumlator = arr[0]
+    if (initialValue === undefined)
+        for (let i = 1, len = arr.length; i < len; i++)
+            accumlator = fn(accumlator, arr[i])
+    else
+        for (let value of arr)
+            accumlator = fn(accumlator, value)
+    return [accumlator]
+}
+let arr = [1, 2, 3, 4]
+console.log(reduce(arr, (acc, val) => acc + val))
+// 输出：[10]
+console.log(reduce(arr, (acc, val) => acc * val, 1))
+// 输出：[24]
 ```
 ---
 ## `zip`函数
@@ -414,18 +418,18 @@
 ### 使用场景
  - **将两个数组相同键的项进行合并操作**
 ``` javascript
-    const zip = (leftArr, rightArr, fn) => {
-        let index, results = []
-        for (index = 0; index < Math.min(leftArr.length, rightArr.length); index++)
-            results.push(fn(leftArr[index], rightArr[index]))
-        return results
-    }
-    console.log(zip(
-        [1, 2, 3, 4],
-        [2, 3, 7, 7, 8],
-        (x, y) => x + y)
-    )
-    // 输出：[3, 5, 10, 11]
+const zip = (leftArr, rightArr, fn) => {
+    let index, results = []
+    for (index = 0; index < Math.min(leftArr.length, rightArr.length); index++)
+        results.push(fn(leftArr[index], rightArr[index]))
+    return results
+}
+console.log(zip(
+    [1, 2, 3, 4],
+    [2, 3, 7, 7, 8],
+    (x, y) => x + y)
+)
+// 输出：[3, 5, 10, 11]
 ```
 ---
 # **3. 柯里化函数**
@@ -440,24 +444,24 @@
 ### 使用场景
  - **多元函数转化为多次传递参数函数**
 ``` javascript
-    const curry = (fn) => {
-        if (typeof fn !== 'function') {
-            throw Error('Not a function')
-        }
-        const currideFn = (...args) => {
-            if (args.length < fn.length) {
-                return (...surplusArgs) => {
-                    return currideFn.apply(null, args.concat(surplusArgs))
-                }
-            }
-            return fn.apply(null, args)
-        }
-        return currideFn
+const curry = (fn) => {
+    if (typeof fn !== 'function') {
+        throw Error('Not a function')
     }
-    const fn = curry((x, y, z) => x + y + z)
-    console.log(fn(1)(2)(3))
-    console.log(fn(1, 2)(3))
-    // 输出：6
+    const currideFn = (...args) => {
+        if (args.length < fn.length) {
+            return (...surplusArgs) => {
+                return currideFn.apply(null, args.concat(surplusArgs))
+            }
+        }
+        return fn.apply(null, args)
+    }
+    return currideFn
+}
+const fn = curry((x, y, z) => x + y + z)
+console.log(fn(1)(2)(3))
+console.log(fn(1, 2)(3))
+// 输出：6
 ```
 ---
 # **4. 偏应用函数**
@@ -473,18 +477,52 @@
 ### 使用场景
  - **当函数的若干个参数中，有未知参数等待下次调用传递时**
 ``` javascript
-    const partial = (fn, ...args) => {
-        return (...fullArgs) => {
-            for (let i = 0, arg = 0; i < args.length && arg < fullArgs.length; i++) {
-                if (args[i] === undefined) {
-                    args[i] = fullArgs[arg++]
-                }
+const partial = (fn, ...args) => {
+    return (...fullArgs) => {
+        for (let i = 0, arg = 0; i < args.length && arg < fullArgs.length; i++) {
+            if (args[i] === undefined) {
+                args[i] = fullArgs[arg++]
             }
-            return fn.apply(null, args)
         }
+        return fn.apply(null, args)
     }
-    let fn = partial(setTimeout, undefined, 3000)
-    fn(() => console.log(123))
-    // 3秒后输出：123
+}
+let fn = partial(setTimeout, undefined, 3000)
+fn(() => console.log(123))
+// 3秒后输出：123
+```
+---
+# **5. 组合函数**
+
+## `compose`函数
+
+### 参数
+ 1. n个`fn`函数
+### 功能
+ - **返回一个将多个`fn`函数组合起来，将前一个`fn`函数的返回值作为参数传递给后一个`fn`函数参数的函数，调用时开始执行**
+### 使用场景
+ - **当一个逻辑可以分成`多个小函数`，并且需要`互相传递参数`时，使用**
+``` javascript
+const reduce = (arr, fn, initialValue) => {
+    let accumlator
+    if (initialValue != undefined)
+        accumlator = initialValue
+    else
+        accumlator = arr[0]
+    if (initialValue === undefined)
+        for (let i = 1, len = arr.length; i < len; i++)
+            accumlator = fn(accumlator, arr[i])
+    else
+        for (let value of arr)
+            accumlator = fn(accumlator, value)
+    return [accumlator]
+}
+const compose = (...fns) =>
+    (value) =>
+        reduce(fns.reverse(), (acc, fn) => fn(acc), value)
+var add = (x) => ++x
+var string = (x) => '' + x
+var fn = compose(string, add)
+fn(3) // ["4"]
 ```
 ---
