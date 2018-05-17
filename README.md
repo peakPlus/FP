@@ -45,6 +45,12 @@
  - [`compose`函数](#compose函数) 
 
  - [`pipe`函数](#pipe函数) 
+
+**[`6.` 函子](#6-函子)**
+
+ - [`mayBe`函数](#mayBe函数) 
+
+ - [`either`函数](#either函数)
 ---
 # **1. 普通函数**
 
@@ -559,5 +565,58 @@ var add = (x) => ++x
 var string = (x) => '' + x
 var fn = pice(string, add)
 fn(3) // ["4"]
+```
+---
+# **6. 函子**
+
+## `mayBe`函数
+
+### 参数
+ 1. `value`值
+
+``` javascript
+const MayBe = function (value) {
+    this.value = value
+}
+MayBe.of = function (value) {
+    return new MayBe(value)
+}
+MayBe.prototype.isNothing = function () {
+    return (this.value === null) || (this.value === undefined)
+}
+MayBe.prototype.map = function (fn) {
+    return this.isNothing() ? MayBe.of(null) : MayBe.of(fn(this.value))
+}
+```
+---
+## `either`函数
+
+### 参数
+ 1. `value`值
+
+``` javascript
+const Nothing = function (value) {
+    this.value = value
+}
+Nothing.of = function (value) {
+    return new Nothing(value)
+}
+Nothing.prototype.map = function (fn) {
+    return this
+}
+const Some = function (value) {
+    this.value = value
+}
+Some.of = function (value) {
+    return new Some(value)
+}
+Some.prototype.map = function (fn) {
+    return Some.of(fn(this.value))
+}
+
+const Either = {
+    Some: Some,
+    Nothing: Nothing
+}
 ```
 ---
